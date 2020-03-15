@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.ListFazendas">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fazendas"
+            android:textColor="@color/preto"
+            android:textSize="18dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"/>
+
+        <ListView
+            android:id="@+id/listViewFazendas1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ></ListView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:background="@color/cinza"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:id="@+id/btnVolta"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="@string/volta"
+            android:background="@color/vermelho"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/branco"
+            android:textSize="18dp"
+            />
+        <Button
+            android:id="@+id/btnCadastra"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="@string/cadastra"
+            android:background="@color/verde_escuro"
+            android:textSize="18dp"
+            android:textColor="@color/branco"
+            />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

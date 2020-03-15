@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.Animais">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:text="@string/animais"
+            android:textColor="@color/preto"
+            android:textSize="18dp" />
+
+
+        <ListView
+            android:id="@+id/listViewAnimais"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></ListView>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:background="@color/cinza"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnVolta"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/vermelho"
+            android:text="@string/volta"
+            android:textColor="@color/branco"
+            android:textSize="18dp" />
+
+        <Button
+            android:id="@+id/btnCadastra"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:background="@color/verde_escuro"
+            android:text="@string/cadastra"
+            android:textColor="@color/branco"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

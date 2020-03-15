@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "604681689217",
+    "firebase_url": "https://appnutrigado-63002.firebaseio.com",
+    "project_id": "appnutrigado-63002",
+    "storage_bucket": "appnutrigado-63002.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604681689217:android:2be07b06a4894425d6d580",
+        "android_client_info": {
+          "package_name": "com.example.appnutrigado"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604681689217-fef389qoja4i2qgu4im0tira82vjel1k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIry5mWnBwBZiPpH5KcvQ0SuBLA0_2lIo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "604681689217-fef389qoja4i2qgu4im0tira82vjel1k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

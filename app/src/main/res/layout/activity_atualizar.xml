@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.Atualizar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cinza"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edtNumBrinco"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:hint="@string/brinco"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/edtNomeAnimais"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:hint="@string/nome" />
+
+        <EditText
+            android:id="@+id/edtRaca"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:hint="@string/raça" />
+
+        <EditText
+            android:id="@+id/edtDataNasc"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:hint="@string/Data"
+            android:inputType="date" />
+
+        <EditText
+            android:id="@+id/edtValorAnimal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:hint="@string/valor"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/edtPesoDoAnimal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:hint="@string/peso"
+            android:inputType="number" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnApaga"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/vermelho"
+            android:text="@string/deletar"
+            android:textColor="@color/branco"
+            android:textSize="19dp" />
+
+        <Button
+            android:id="@+id/btnAtualiza"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:background="@color/verde_escuro"
+            android:text="@string/Atualiza"
+            android:textColor="@color/branco"
+            android:textSize="19dp" />
+    </LinearLayout>
+
+</RelativeLayout>
