@@ -4,109 +4,130 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.Cadastro_Animais">
+    tools:context=".view.CadastroAnimais">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/cinza">
-        <EditText
-            android:id="@+id/edtNumBrinco"
+        android:background="@color/cinza"
+        android:orientation="vertical">
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="@string/brinco"
-            android:inputType="number"
-            android:layout_marginTop="20dp"
+            android:layout_height="match_parent"
+            android:text="@string/brinco"
+            android:textSize="15dp"
             />
+
+        <EditText
+            android:id="@+id/edtNumBrincu"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:inputType="number" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/nome"
+            android:textSize="15dp"
+            />
+
         <EditText
             android:id="@+id/edtNomeAnimais"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="@string/nome"
-            android:layout_marginTop="20dp"
-            />
-        <EditText
-            android:id="@+id/edtRaca"
+            android:layout_height="40dp" />
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:hint="@string/raça"
-            android:layout_marginTop="20dp"
+            android:textSize="15dp"
             />
+
+       <Spinner
+           android:id="@+id/spinnerRaca"
+           android:layout_width="match_parent"
+           android:layout_height="40dp"
+            />
+
         <EditText
             android:id="@+id/edtDataNasc"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="@string/Data"
             android:layout_marginTop="20dp"
-            android:inputType="date"
-            />
+            android:hint="@string/Data"
+            android:inputType="date" />
+
         <EditText
             android:id="@+id/edtValorAnimal"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="@string/valor"
-            android:inputType="number"
             android:layout_marginTop="20dp"
-            />
+            android:hint="@string/valor"
+            android:inputType="number" />
+
         <EditText
             android:id="@+id/edtPesoDoAnimal"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="@string/peso"
-            android:inputType="number"
             android:layout_marginTop="20dp"
-            />
+            android:hint="@string/peso"
+            android:inputType="number" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sexo"
-            android:textSize="18dp"
             android:textColor="@color/preto"
-            />
+            android:textSize="18dp" />
+
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/macho"
-                android:textSize="20dp"
-                />
+                android:textSize="20dp" />
+
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/femia"
-                android:textSize="20dp"/>
+                android:textSize="20dp" />
         </RadioGroup>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cobertura"
-            android:textSize="18dp"
-            android:textColor="@color/preto"
             android:layout_marginTop="10dp"
-            />
+            android:text="@string/cobertura"
+            android:textColor="@color/preto"
+            android:textSize="18dp" />
+
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/natural"
-                android:textSize="20dp"
-                />
+                android:textSize="20dp" />
+
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/artificial"
-                android:textSize="20dp"/>
+                android:textSize="20dp" />
         </RadioGroup>
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Cadastro_Fazendas extends AppCompatActivity {
+public class CadastroFazendas extends AppCompatActivity {
     private Button cadastrar;
     private EditText editNomeFazenda, editMunicipio, editIncEstadual, editCNPJouCPF, editEndereço;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -64,7 +66,7 @@ public class Cadastro_Fazendas extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     alert("Sucesso ao Cadastrar");
-                                    Intent i = new Intent(Cadastro_Fazendas.this, ListFazendas.class);
+                                    Intent i = new Intent(CadastroFazendas.this, ListFazendas.class);
                                     startActivity(i);
 
                                 }
@@ -81,6 +83,23 @@ public class Cadastro_Fazendas extends AppCompatActivity {
         });
     }
     private void alert(String msg) {
-        Toast.makeText(Cadastro_Fazendas.this, msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(CadastroFazendas.this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                Intent i = new Intent(CadastroFazendas.this, Login.class);
+                startActivity(i);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -51,7 +53,7 @@ public class ListFazendas extends AppCompatActivity {
         btnCad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(ListFazendas.this, Cadastro_Fazendas.class);
+                Intent i = new Intent(ListFazendas.this, CadastroFazendas.class);
                 startActivity(i);
             }
         });
@@ -72,7 +74,7 @@ public class ListFazendas extends AppCompatActivity {
                                     }
                                 }
                                 System.out.println(no);
-                                Intent i = new Intent(ListFazendas.this, Menu.class);
+                                Intent i = new Intent(ListFazendas.this, MenuPrincipal.class);
                                 Bundle parms = new Bundle();
                                 parms.putString("id", no);
                                 i.putExtras(parms);
@@ -108,5 +110,22 @@ public class ListFazendas extends AppCompatActivity {
 
     private void alert(String msg) {
         Toast.makeText(ListFazendas.this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                Intent i = new Intent(ListFazendas.this, Login.class);
+                startActivity(i);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -40,4 +40,12 @@
     <string name="CPFouCNPJ">Cpf ou Cnpj</string>
     <string name="Endereco">Endereço</string>
     <string name="IncEstaudal">Inscrição Estadual</string>
+    <string name="Logout">Logout</string>
+    <string-array name="racas">
+        <item>Holandesa</item>
+        <item>Jersey</item>
+        <item>Gir</item>
+        <item>Girolando</item>
+        <item>Jersolando</item>
+    </string-array>
 </resources>

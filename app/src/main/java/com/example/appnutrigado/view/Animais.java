@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -56,7 +58,7 @@ public class Animais extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println(id);
-                Intent i = new Intent(Animais.this, Cadastro_Animais.class);
+                Intent i = new Intent(Animais.this, CadastroAnimais.class);
                 Bundle parms = new Bundle();
                 parms.putString("id", id);
                 i.putExtras(parms);
@@ -81,7 +83,7 @@ public class Animais extends AppCompatActivity {
                                     }
                                 }
                                 System.out.println(no);
-                                Intent i = new Intent(Animais.this, Atualizar.class);
+                                Intent i = new Intent(Animais.this, Atualiza.class);
                                 Bundle parms = new Bundle();
                                 parms.putString("id", no);
                                 i.putExtras(parms);
@@ -119,5 +121,21 @@ public class Animais extends AppCompatActivity {
 
     private void alert(String msg) {
         Toast.makeText(Animais.this, msg, Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                Intent i = new Intent(Animais.this, Login.class);
+                startActivity(i);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

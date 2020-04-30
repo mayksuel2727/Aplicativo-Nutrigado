@@ -3,12 +3,12 @@ package com.example.appnutrigado.control;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class Conexao {
+public class ConexaoAuth {
     private static FirebaseAuth firebaseAuth;
     private static FirebaseAuth.AuthStateListener authStateListener;
     private static FirebaseUser firebaseUser;
 
-    private Conexao(){
+    private ConexaoAuth(){
 
     }
 

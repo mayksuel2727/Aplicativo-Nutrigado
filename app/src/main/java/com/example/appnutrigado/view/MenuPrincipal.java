@@ -1,15 +1,19 @@
 package com.example.appnutrigado.view;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
 import com.example.appnutrigado.R;
+import com.google.firebase.auth.FirebaseAuth;
 
-public class Menu extends AppCompatActivity {
+public class MenuPrincipal extends AppCompatActivity {
     private ImageButton btnFechar, btnCadastraAnimais;
     String id;
     @Override
@@ -40,7 +44,7 @@ public class Menu extends AppCompatActivity {
             public void onClick(View v) {
 
                 System.out.println(id);
-                Intent i = new Intent(Menu.this, Animais.class);
+                Intent i = new Intent(MenuPrincipal.this, Animais.class);
                 Bundle parms = new Bundle();
                 parms.putString("id", id);
                 i.putExtras(parms);
@@ -52,5 +56,21 @@ public class Menu extends AppCompatActivity {
     private void inicializarComponentes() {
         btnFechar = (ImageButton) findViewById(R.id.btnfechar1);
         btnCadastraAnimais = (ImageButton) findViewById(R.id.btncadastraanimais);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                Intent i = new Intent(MenuPrincipal.this, Login.class);
+                startActivity(i);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

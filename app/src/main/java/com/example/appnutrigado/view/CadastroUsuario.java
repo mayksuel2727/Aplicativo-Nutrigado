@@ -22,7 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Cadastro_Usuario extends AppCompatActivity {
+public class CadastroUsuario extends AppCompatActivity {
     private EditText editNome, editTelefone, editEmail, editSenha;
     private Button btnCadastrar, btnVoltar;
     private FirebaseAuth auth;
@@ -55,7 +55,7 @@ public class Cadastro_Usuario extends AppCompatActivity {
     }
 
     private void InsertBD(String email, String senha) {
-        auth.createUserWithEmailAndPassword(email,senha).addOnCompleteListener(Cadastro_Usuario.this, new OnCompleteListener<AuthResult>() {
+        auth.createUserWithEmailAndPassword(email,senha).addOnCompleteListener(CadastroUsuario.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
@@ -77,7 +77,7 @@ public class Cadastro_Usuario extends AppCompatActivity {
                                     alert("Error no Banco de Dados");
                                 }
                             });
-                    Intent i = new Intent(Cadastro_Usuario.this, ListFazendas.class);
+                    Intent i = new Intent(CadastroUsuario.this, ListFazendas.class);
                     startActivity(i);
                 }else{
                         alert("que porra aconteceu");
@@ -100,6 +100,6 @@ public class Cadastro_Usuario extends AppCompatActivity {
     }
 
     private void alert(String msg) {
-        Toast.makeText(Cadastro_Usuario.this, msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(CadastroUsuario.this, msg, Toast.LENGTH_SHORT).show();
     }
 }

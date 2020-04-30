@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.appnutrigado.R;
-import com.example.appnutrigado.control.Conexao;
+import com.example.appnutrigado.control.ConexaoAuth;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -37,7 +37,7 @@ public class Login extends AppCompatActivity {
         btnCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Login.this, Cadastro_Usuario.class);
+                Intent i = new Intent(Login.this, CadastroUsuario.class);
                 startActivity(i);
             }
         });
@@ -79,9 +79,11 @@ public class Login extends AppCompatActivity {
         btnEntrar = (Button) findViewById(R.id.btnEntra);
         btnCadastro = (Button) findViewById(R.id.btnCadastro);
     }
+
+
     @Override
     protected void onStart() {
         super.onStart();
-        auth = Conexao.getFirebaseAuth();
+        auth = ConexaoAuth.getFirebaseAuth();
     }
 }

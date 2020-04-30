@@ -9,12 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.Menu"></activity>
+        <activity android:name=".view.MenuPrincipal"></activity>
         <activity android:name=".view.ListFazendas" />
-        <activity android:name=".view.Cadastro_Fazendas" />
-        <activity android:name=".view.Cadastro_Animais" />
-        <activity android:name=".view.Cadastro_Usuario" />
-        <activity android:name=".view.Atualizar" />
+        <activity android:name=".view.CadastroFazendas" />
+        <activity android:name=".view.CadastroAnimais" />
+        <activity android:name=".view.CadastroUsuario" />
+        <activity android:name=".view.Atualiza" />
         <activity android:name=".view.Animais"></activity>
         <activity android:name=".view.Login">
             <intent-filter>
