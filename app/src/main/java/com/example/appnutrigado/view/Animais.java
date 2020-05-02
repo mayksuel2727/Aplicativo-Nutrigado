@@ -76,16 +76,18 @@ public class Animais extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                String no = null;
+                                String numeroBrinco = null;
                                 if (task.isSuccessful()) {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
-                                        no = (String) document.get("Numero do Brinco");
+                                        numeroBrinco = (String) document.get("Numero do Brinco");
+                                        System.out.println(numeroBrinco);
                                     }
                                 }
-                                System.out.println(no);
+                                System.out.println(numeroBrinco);
                                 Intent i = new Intent(Animais.this, Atualiza.class);
                                 Bundle parms = new Bundle();
-                                parms.putString("id", no);
+                                parms.putString("numerobrinco", numeroBrinco);
+                                parms.putString("id", id);
                                 i.putExtras(parms);
                                 startActivity(i);
                             }

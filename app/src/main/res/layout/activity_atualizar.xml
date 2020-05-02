@@ -12,52 +12,127 @@
         android:background="@color/cinza"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/edtNumBrincu"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/brinco"
+            android:textColor="@color/preto"
+            android:textSize="17dp"
+            />
+
+        <TextView
+            android:id="@+id/textNumBrinco"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:hint="@string/brinco"
-            android:inputType="number" />
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/nome"
+            android:textColor="@color/preto"
+            android:textSize="17dp"
+            />
 
         <EditText
             android:id="@+id/edtNomeAnimais"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:hint="@string/nome" />
+            android:layout_height="50dp" />
 
-        <EditText
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/raça"
+            android:textColor="@color/preto"
+            android:textSize="17dp"
+            />
+
+        <Spinner
             android:id="@+id/spinnerRaca"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:hint="@string/raça" />
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/Data"
+            android:textColor="@color/preto"
+            android:textSize="17dp"/>
 
         <EditText
             android:id="@+id/edtDataNasc"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:hint="@string/Data"
             android:inputType="date" />
 
-        <EditText
-            android:id="@+id/edtValorAnimal"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:hint="@string/valor"
-            android:inputType="number" />
+            android:layout_height="match_parent"
+            android:text="@string/peso"
+            android:textColor="@color/preto"
+            android:textSize="17dp"/>
 
         <EditText
             android:id="@+id/edtPesoDoAnimal"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:hint="@string/peso"
             android:inputType="number" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sexo"
+            android:textColor="@color/preto"
+            android:textSize="17dp" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/masculino"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/macho"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:id="@+id/femenino"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/femia"
+                android:textSize="20dp" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/cobertura"
+            android:textColor="@color/preto"
+            android:textSize="18dp" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/natural"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/natural"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:id="@+id/artificial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/artificial"
+                android:textSize="20dp" />
+        </RadioGroup>
 
     </LinearLayout>
 
@@ -66,11 +141,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="8dp"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnApaga"
+            android:id="@+id/btnDeletar"
             android:layout_width="180dp"
             android:layout_height="60dp"
             android:layout_marginRight="10dp"
@@ -80,7 +155,7 @@
             android:textSize="19dp" />
 
         <Button
-            android:id="@+id/btnAtualiza"
+            android:id="@+id/btnAtualizar"
             android:layout_width="180dp"
             android:layout_height="60dp"
             android:background="@color/verde_escuro"

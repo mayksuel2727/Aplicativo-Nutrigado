@@ -26,8 +26,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.appnutrigado.R.id.spinnerRaca;
-
 
 public class CadastroAnimais extends AppCompatActivity {
     private String id, nomeRacas, sexo, montada;
@@ -43,7 +41,7 @@ public class CadastroAnimais extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro__animais);
         inicializarComponentes();
-        Spinner();
+        spinner();
         eventoClicks();
     }
 
@@ -109,17 +107,16 @@ public class CadastroAnimais extends AppCompatActivity {
         editDataNasc = (EditText) findViewById(R.id.edtDataNasc);
         editNumBrinco = (EditText) findViewById(R.id.edtNumBrincu);
         editNomeAnimais = (EditText) findViewById(R.id.edtNomeAnimais);
-        editValorAnimal = (EditText) findViewById(R.id.edtValorAnimal);
         editPesoAnimal = (EditText) findViewById(R.id.edtPesoDoAnimal);
         btnCadastra = (Button) findViewById(R.id.btnCadastra);
-        racas = (Spinner) findViewById(spinnerRaca);
+        racas = (Spinner) findViewById(R.id.spinnerRaca);
         masculino = (RadioButton) findViewById(R.id.masculino);
         feminino = (RadioButton) findViewById(R.id.femenino);
         natural = (RadioButton) findViewById(R.id.natural);
         artificial = (RadioButton) findViewById(R.id.artificial);
     }
 
-    public void Spinner(){
+    public void spinner(){
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.racas, android.R.layout.simple_spinner_item);
         racas.setAdapter(adapter);
         AdapterView.OnItemSelectedListener escolha = new AdapterView.OnItemSelectedListener() {
