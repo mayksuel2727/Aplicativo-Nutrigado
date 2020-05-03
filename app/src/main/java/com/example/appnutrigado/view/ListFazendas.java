@@ -48,6 +48,7 @@ public class ListFazendas extends AppCompatActivity {
         }
     }
 
+
     private void eventoClick() {
         final String email1 = user.getEmail();
         btnCad.setOnClickListener(new View.OnClickListener() {

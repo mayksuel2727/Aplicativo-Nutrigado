@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class CadastroUsuario extends AppCompatActivity {
     private EditText editNome, editTelefone, editEmail, editSenha;
-    private Button btnCadastrar, btnVoltar;
+    private Button btnCadastrar;
     private FirebaseAuth auth;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -32,12 +32,13 @@ public class CadastroUsuario extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro__usuario);
-        getSupportActionBar().hide();
+        //etSupportActionBar().hide();
         auth = FirebaseAuth.getInstance();
 
         inicializarComponentes();
         eventosClicks();
     }
+
 
     private void eventosClicks() {
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
@@ -86,17 +87,12 @@ public class CadastroUsuario extends AppCompatActivity {
         });
     }
 
-    private void FireBaseFS() {
-
-    }
-
     private void inicializarComponentes() {
         editEmail = (EditText) findViewById(R.id.editEmail);
         editNome = (EditText) findViewById(R.id.editNome);
         editSenha = (EditText) findViewById(R.id.editSenha);
         editTelefone = (EditText) findViewById(R.id.editTelefone);
         btnCadastrar = (Button) findViewById(R.id.btnCadastraCU);
-        btnVoltar = (Button) findViewById(R.id.btnVolta);
     }
 
     private void alert(String msg) {

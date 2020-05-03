@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MenuPrincipal extends AppCompatActivity {
     private ImageButton btnFechar, btnCadastraAnimais;
-    String id;
+    private String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -33,6 +33,7 @@ public class Login extends AppCompatActivity {
         eventoClicks();
     }
 
+
     private void eventoClicks() {
         btnCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,8 +80,6 @@ public class Login extends AppCompatActivity {
         btnEntrar = (Button) findViewById(R.id.btnEntra);
         btnCadastro = (Button) findViewById(R.id.btnCadastro);
     }
-
-
     @Override
     protected void onStart() {
         super.onStart();

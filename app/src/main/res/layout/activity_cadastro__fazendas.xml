@@ -10,46 +10,79 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/branco"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Nome_fazenda"
+            android:textColor="@color/preto"
+            android:textSize="17dp"
+            />
+
 
         <EditText
             android:id="@+id/editNomeFazenda"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:hint="@string/nome_fazenda"
-            android:textSize="16dp" />
+            android:layout_height="50dp"
+            android:textSize="20dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/municipio"
+            android:textColor="@color/preto"
+            android:textSize="17dp"
+            />
+
 
         <EditText
             android:id="@+id/editMunicipio"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:hint="@string/municipio"
+            android:layout_height="50dp"
             android:textSize="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/CPFouCNPJ"
+            android:textSize="17dp"
+            android:textColor="@color/preto"
+            />
+
 
         <EditText
             android:id="@+id/editCPFouCNPJ"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:hint="@string/CPFouCNPJ"
-            android:textSize="16dp" />
+            android:layout_height="50dp"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/preto"
+            android:textSize="17dp"
+            android:text="@string/Endereco"
+            />
 
         <EditText
             android:id="@+id/endereco"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:hint="@string/Endereco"
-            android:textSize="16dp" />
+            android:layout_height="50dp"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/IncEstaudal"
+            android:textSize="17dp"
+            android:textColor="@color/preto"
+            />
+
         <EditText
             android:id="@+id/inscricaoEstadual"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:hint="@string/IncEstaudal"
-            android:textSize="16dp" />
+            android:layout_height="50dp"
+            android:textSize="17dp" />
 
     </LinearLayout>
 
@@ -58,18 +91,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btnVolta"
-            android:layout_width="180dp"
-            android:layout_height="60dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/vermelho"
-            android:text="@string/volta"
-            android:textColor="@color/branco"
-            android:textSize="19dp" />
 
         <Button
             android:id="@+id/btnCadastra"

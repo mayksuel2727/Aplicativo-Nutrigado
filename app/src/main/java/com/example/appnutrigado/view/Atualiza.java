@@ -33,8 +33,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Atualiza extends AppCompatActivity {
+
     private String nomeRacas, sexo, montada, id, numeroBrinco, nomeDoAnimal, dataNacimento, pesoDoAnimal, racas;
-    private EditText editNomeAnimais, editDataNasc, editPesoAnimal, editValorAnimal;
+    private EditText editNomeAnimais, editDataNasc, editPesoAnimal;
     private TextView texNumBrinco;
     private Spinner spinnerRacas;
     private RadioButton masculino, feminino, natural, artificial;

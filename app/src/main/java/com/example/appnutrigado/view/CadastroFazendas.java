@@ -34,6 +34,8 @@ public class CadastroFazendas extends AppCompatActivity {
         inicializarComponentes();
         eventoClicks();
     }
+
+
     private void inicializarComponentes() {
         cadastrar = (Button) findViewById(R.id.btnCadastra);
         editNomeFazenda = (EditText) findViewById(R.id.editNomeFazenda);
@@ -82,6 +84,7 @@ public class CadastroFazendas extends AppCompatActivity {
             }
         });
     }
+
     private void alert(String msg) {
         Toast.makeText(CadastroFazendas.this, msg, Toast.LENGTH_SHORT).show();
     }

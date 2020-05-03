@@ -41,6 +41,7 @@
     <string name="Endereco">Endereço</string>
     <string name="IncEstaudal">Inscrição Estadual</string>
     <string name="Logout">Logout</string>
+    <string name="NutricaoAnimal">Nutrição Animal</string>
     <string-array name="racas">
         <item>Holandesa</item>
         <item>Jersey</item>

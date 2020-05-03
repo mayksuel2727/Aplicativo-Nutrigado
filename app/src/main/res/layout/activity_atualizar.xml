@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/cinza"
+        android:background="@color/branco"
         android:orientation="vertical">
 
         <TextView
@@ -141,7 +141,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
         <Button

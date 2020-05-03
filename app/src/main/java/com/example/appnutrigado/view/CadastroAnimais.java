@@ -45,6 +45,7 @@ public class CadastroAnimais extends AppCompatActivity {
         eventoClicks();
     }
 
+
     private void Radio_Button() {
         if (masculino.isChecked())
             sexo = "Macho";
