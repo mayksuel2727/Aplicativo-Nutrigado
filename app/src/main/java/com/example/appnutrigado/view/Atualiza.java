@@ -61,7 +61,6 @@ public class Atualiza extends AppCompatActivity {
         inicializarComponentes();
         spinner();
         buscarDados();
-
         eventoClick();
     }
 
@@ -137,7 +136,7 @@ public class Atualiza extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     alert("Sucesso ao Cadastra");
-                                    Intent i = new Intent(Atualiza.this, Animais.class);
+                                    Intent i = new Intent(Atualiza.this, List_Animais_Cad.class);
                                     Bundle parms = new Bundle();
                                     parms.putString("id", id);
                                     i.putExtras(parms);
@@ -154,11 +153,11 @@ public class Atualiza extends AppCompatActivity {
                 String email = user.getEmail();
                 if (user != null) {
                     db.collection("Usuario").document(email).collection("Fazendas")
-                            .document(id).collection("Animais").document(numeroBrinco).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            .document(id).collection("List_Animais_Cad").document(numeroBrinco).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             alert("deletado com sucesso");
-                            Intent i = new Intent(Atualiza.this, Animais.class);
+                            Intent i = new Intent(Atualiza.this, List_Animais_Cad.class);
                             Bundle parms = new Bundle();
                             parms.putString("id", id);
                             i.putExtras(parms);

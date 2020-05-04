@@ -26,7 +26,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Animais extends AppCompatActivity {
+public class List_Animais_Nutri extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -34,12 +34,12 @@ public class Animais extends AppCompatActivity {
     private List<String> listAnimais = new ArrayList<String>();
     private ArrayAdapter<String> arrayAdapterAnimais;
     private String animalSelecionado;
-    private Button btnCad;
     private String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_animais);
+        setContentView(R.layout.activity_list__animais__nutri);
+
         inicializarComponentes();
         Intent i = getIntent();
         if (i!= null){
@@ -48,23 +48,13 @@ public class Animais extends AppCompatActivity {
                 id  = parms.getString("id");
             }
         }
-            eventoBusca();
-            eventoClick();
+        eventoBusca();
+        eventoClick();
     }
 
     private void eventoClick() {
         final String email1 = user.getEmail();
-        btnCad.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println(id);
-                Intent i = new Intent(Animais.this, CadastroAnimais.class);
-                Bundle parms = new Bundle();
-                parms.putString("id", id);
-                i.putExtras(parms);
-                startActivity(i);
-            }
-        });
+
         listViewAnimais.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -77,16 +67,19 @@ public class Animais extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 String numeroBrinco = null;
+                                String nomeAnimal = null;
                                 if (task.isSuccessful()) {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         numeroBrinco = (String) document.get("Numero do Brinco");
+                                        nomeAnimal = (String) document.get("Nome do Animal");
                                         System.out.println(numeroBrinco);
                                     }
                                 }
                                 System.out.println(numeroBrinco);
-                                Intent i = new Intent(Animais.this, Atualiza.class);
+                                Intent i = new Intent(List_Animais_Nutri.this, Nutricao.class);
                                 Bundle parms = new Bundle();
                                 parms.putString("numerobrinco", numeroBrinco);
+                                parms.putString("nomedoanimal", nomeAnimal);
                                 parms.putString("id", id);
                                 i.putExtras(parms);
                                 startActivity(i);
@@ -118,11 +111,10 @@ public class Animais extends AppCompatActivity {
 
     private void inicializarComponentes() {
         listViewAnimais = (ListView) findViewById(R.id.listViewAnimais);
-        btnCad = (Button) findViewById(R.id.btnCadastra);
-    }
+}
 
     private void alert(String msg) {
-        Toast.makeText(Animais.this, msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(List_Animais_Nutri.this, msg, Toast.LENGTH_SHORT).show();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -135,7 +127,7 @@ public class Animais extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
-                Intent i = new Intent(Animais.this, Login.class);
+                Intent i = new Intent(List_Animais_Nutri.this, Login.class);
                 startActivity(i);
         }
         return super.onOptionsItemSelected(item);

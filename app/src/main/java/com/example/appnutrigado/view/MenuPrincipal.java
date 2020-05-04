@@ -14,7 +14,7 @@ import com.example.appnutrigado.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MenuPrincipal extends AppCompatActivity {
-    private ImageButton btnFechar, btnCadastraAnimais;
+    private ImageButton btnFechar, btnCadastraAnimais, btngerenciaNutri;
     private String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,18 @@ public class MenuPrincipal extends AppCompatActivity {
             public void onClick(View v) {
 
                 System.out.println(id);
-                Intent i = new Intent(MenuPrincipal.this, Animais.class);
+                Intent i = new Intent(MenuPrincipal.this, List_Animais_Cad.class);
+                Bundle parms = new Bundle();
+                parms.putString("id", id);
+                i.putExtras(parms);
+                startActivity(i);
+            }
+        });
+
+        btngerenciaNutri.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MenuPrincipal.this, List_Animais_Nutri.class);
                 Bundle parms = new Bundle();
                 parms.putString("id", id);
                 i.putExtras(parms);
@@ -56,6 +67,8 @@ public class MenuPrincipal extends AppCompatActivity {
     private void inicializarComponentes() {
         btnFechar = (ImageButton) findViewById(R.id.btnfechar1);
         btnCadastraAnimais = (ImageButton) findViewById(R.id.btncadastraanimais);
+        btngerenciaNutri = (ImageButton) findViewById(R.id.btnGerenciaNutri);
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

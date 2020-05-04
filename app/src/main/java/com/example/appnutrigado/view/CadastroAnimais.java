@@ -35,6 +35,7 @@ public class CadastroAnimais extends AppCompatActivity {
     private RadioButton masculino, feminino, natural, artificial;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,7 @@ public class CadastroAnimais extends AppCompatActivity {
         btnCadastra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
                 if (user != null) {
                     Radio_Button();
                     String email = user.getEmail();
@@ -82,6 +83,8 @@ public class CadastroAnimais extends AppCompatActivity {
                     animais.put("montada", montada);
                     animais.put("Data de Nascimento", editDataNasc.getText().toString());
                     animais.put("Peso do Animal", editPesoAnimal.getText().toString());
+                    animais.put("Sobras", "");
+                    animais.put("Ração Colocada", "");
                     System.out.println(id);
                     Log.i("ITALAC", "Incrição estadual: " + id);
 
@@ -92,7 +95,7 @@ public class CadastroAnimais extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     alert("Sucesso ao Cadastra");
-                                    Intent i = new Intent(CadastroAnimais.this, Animais.class);
+                                    Intent i = new Intent(CadastroAnimais.this, List_Animais_Cad.class);
                                     Bundle parms = new Bundle();
                                     parms.putString("id", id);
                                     i.putExtras(parms);
@@ -117,7 +120,7 @@ public class CadastroAnimais extends AppCompatActivity {
         artificial = (RadioButton) findViewById(R.id.artificial);
     }
 
-    public void spinner(){
+    public void spinner() {
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.racas, android.R.layout.simple_spinner_item);
         racas.setAdapter(adapter);
         AdapterView.OnItemSelectedListener escolha = new AdapterView.OnItemSelectedListener() {
@@ -137,6 +140,7 @@ public class CadastroAnimais extends AppCompatActivity {
     private void alert(String msg) {
         Toast.makeText(CadastroAnimais.this, msg, Toast.LENGTH_SHORT).show();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -145,7 +149,7 @@ public class CadastroAnimais extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
                 Intent i = new Intent(CadastroAnimais.this, Login.class);

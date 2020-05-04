@@ -9,14 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.Nutricao"></activity>
+        <activity android:name=".view.List_Animais_Nutri"></activity>
+        <activity android:name=".view.Nutricao" />
         <activity android:name=".view.MenuPrincipal" />
         <activity android:name=".view.ListFazendas" />
         <activity android:name=".view.CadastroFazendas" />
         <activity android:name=".view.CadastroAnimais" />
         <activity android:name=".view.CadastroUsuario" />
         <activity android:name=".view.Atualiza" />
-        <activity android:name=".view.Animais" />
+        <activity android:name=".view.List_Animais_Cad" />
         <activity android:name=".view.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

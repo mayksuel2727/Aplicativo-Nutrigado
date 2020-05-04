@@ -37,7 +37,83 @@
             android:textSize="20dp"
             />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/preto"
+            android:text="@string/brinco"
+            android:textSize="17dp"
+            />
+        <TextView
+            android:id="@+id/textNumBrinco"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textColor="@color/preto"
+            android:textSize="20dp"
+            />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/preto"
+            android:textSize="17dp"
+            android:text="@string/pesoAtual"
+            />
+        <EditText
+            android:id="@+id/edtPesoAtual"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="20dp"
+            android:textColor="@color/preto"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/preto"
+            android:textSize="17dp"
+            android:text="@string/sobras"
+            />
+        <EditText
+            android:id="@+id/quantidadeSobras"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="20dp"
+            android:textColor="@color/preto"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/preto"
+            android:textSize="17dp"
+            android:text="@string/quantidadeAtual"
+            />
+
+        <EditText
+            android:id="@+id/RacaoColocada"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="20dp"
+            android:textColor="@color/preto"
+            />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnCadastra"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:background="@color/verde_escuro"
+            android:text="@string/cadastra"
+            android:textColor="@color/branco"
+            android:textSize="19dp" />
+    </LinearLayout>
+
 
 </RelativeLayout>
