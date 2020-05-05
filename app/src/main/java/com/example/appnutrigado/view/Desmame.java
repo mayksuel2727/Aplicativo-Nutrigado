@@ -8,9 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.appnutrigado.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,7 +30,7 @@ public class Desmame extends AppCompatActivity {
     private ListView listViewAnimais;
     private List<String> listAnimais = new ArrayList<String>();
     private ArrayAdapter<String> arrayAdapterAnimais;
-    private String animalSelecionado;
+    //private String animalSelecionado;
     private String id;
 
     @Override
@@ -88,9 +86,9 @@ public class Desmame extends AppCompatActivity {
         listViewAnimais = (ListView) findViewById(R.id.listViewAnimais);
     }
 
-    private void alert(String msg) {
+    /*private void alert(String msg) {
         Toast.makeText(Desmame.this, msg, Toast.LENGTH_SHORT).show();
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
