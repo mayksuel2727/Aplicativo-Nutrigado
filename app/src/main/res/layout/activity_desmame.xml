@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.List_Animais_Nutri">
+    tools:context=".view.Desmame">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,20 +13,20 @@
         android:background="@color/branco"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="40dp"
-            android:text="@string/animais"
-            android:textColor="@color/preto"
-            android:textSize="18dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:text="@string/animaisDesmame"
+        android:textColor="@color/preto"
+        android:textSize="18dp" />
 
 
-        <ListView
-            android:id="@+id/listViewAnimais"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></ListView>
+    <ListView
+        android:id="@+id/listViewAnimais"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
 
     </LinearLayout>
 

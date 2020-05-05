@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Nutricao extends AppCompatActivity {
-    private String id, numeroBrinco,nomeAnimal, pesoDoAnimal, nomeRacas, sexo, montada, dataNasc;
+    private String id, numeroBrinco,nomeAnimal, pesoAoNascer, nomeRacas, sexo, montada, dataNasc;
     private TextView txtNomeAnimal, txtNumBrinco;
     private EditText edtPesoAtual, edtQuantidadeSobras, edtRacaoColocada;
     private Button btnCadastra;
@@ -69,7 +69,8 @@ public class Nutricao extends AppCompatActivity {
                     animais.put("sexo", sexo);
                     animais.put("montada", montada);
                     animais.put("Data de Nascimento", dataNasc);
-                    animais.put("Peso do Animal", edtPesoAtual.getText().toString());
+                    animais.put("Peso Ao Nascer", pesoAoNascer);
+                    animais.put("Peso Atual", edtPesoAtual.getText().toString());
                     animais.put("Sobras", edtQuantidadeSobras.getText().toString());
                     animais.put("Ração Colocada", edtRacaoColocada.getText().toString());
                     db.collection("Usuario").document(email).collection("Fazendas")
@@ -101,14 +102,13 @@ public class Nutricao extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()){
                     for (QueryDocumentSnapshot document : task.getResult()){
-                        pesoDoAnimal = (String) document.get("Peso do Animal");
+                        pesoAoNascer = (String) document.get("Peso Ao Nascer");
                         nomeRacas = (String) document.get("Raça");
                         sexo = (String) document.get("sexo");
                         montada = (String) document.get("montada");
                         dataNasc = (String) document.get("Data de Nascimento");
                         txtNomeAnimal.setText(nomeAnimal);
                         txtNumBrinco.setText(numeroBrinco);
-                        edtPesoAtual.setText(pesoDoAnimal);
                     }
                 }
             }

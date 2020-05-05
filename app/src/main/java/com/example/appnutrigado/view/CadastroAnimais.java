@@ -82,7 +82,7 @@ public class CadastroAnimais extends AppCompatActivity {
                     animais.put("sexo", sexo);
                     animais.put("montada", montada);
                     animais.put("Data de Nascimento", editDataNasc.getText().toString());
-                    animais.put("Peso do Animal", editPesoAnimal.getText().toString());
+                    animais.put("Peso Ao Nascer", editPesoAnimal.getText().toString());
                     animais.put("Sobras", "");
                     animais.put("Ração Colocada", "");
                     System.out.println(id);

@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -26,7 +24,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class List_Animais_Nutri extends AppCompatActivity {
+public class Desmame extends AppCompatActivity {
+
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -35,59 +34,21 @@ public class List_Animais_Nutri extends AppCompatActivity {
     private ArrayAdapter<String> arrayAdapterAnimais;
     private String animalSelecionado;
     private String id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list__animais__nutri);
-
-        inicializarComponentes();
+        setContentView(R.layout.activity_desmame);
         Intent i = getIntent();
-        if (i!= null){
+        if (i != null) {
             Bundle parms = i.getExtras();
-            if (parms != null){
-                id  = parms.getString("id");
+            if (parms != null) {
+                id = parms.getString("id");
+                System.out.println(id);
             }
         }
         eventoBusca();
-        eventoClick();
-    }
-
-    private void eventoClick() {
-        final String email1 = user.getEmail();
-
-        listViewAnimais.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                animalSelecionado = (String) adapterView.getItemAtPosition(position);
-
-                db.collection("Usuario").document(email1).collection("Fazendas")
-                        .document(id).collection("Animais").whereEqualTo("Nome do Animal", animalSelecionado)
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                String numeroBrinco = null;
-                                String nomeAnimal = null;
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        numeroBrinco = (String) document.get("Numero do Brinco");
-                                        nomeAnimal = (String) document.get("Nome do Animal");
-                                        System.out.println(numeroBrinco);
-                                    }
-                                }
-                                System.out.println(numeroBrinco);
-                                Intent i = new Intent(List_Animais_Nutri.this, Nutricao.class);
-                                Bundle parms = new Bundle();
-                                parms.putString("numerobrinco", numeroBrinco);
-                                parms.putString("nomedoanimal", nomeAnimal);
-                                parms.putString("id", id);
-                                i.putExtras(parms);
-                                startActivity(i);
-                            }
-
-                        });
-            }
-        });
+        inicializarComponentes();
     }
 
     private void eventoBusca() {
@@ -100,7 +61,21 @@ public class List_Animais_Nutri extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                         String nome = (String) documentSnapshot.get("Nome do Animal");
-                        listAnimais.add(nome);
+                        String pesoNacerString = (String) documentSnapshot.get("Peso Ao Nascer");
+                        String pesoAtualString = (String) documentSnapshot.get("Peso Atual");
+                        String racaoColocadaString = (String) documentSnapshot.get("Ração Colocada");
+                        String sobraString = (String) documentSnapshot.get("Sobras");
+                        if (pesoAtualString!= null && pesoNacerString!=null && racaoColocadaString != null && sobraString != null){
+                            double pesoAtual = Double.parseDouble(pesoAtualString);
+                            double pesoNacer = Double.parseDouble(pesoNacerString);
+                            double resPeso = pesoAtual / pesoNacer;
+                            double racaoColocada = Double.parseDouble(racaoColocadaString);
+                            double sobras = Double.parseDouble(sobraString);
+                            double resRacao = racaoColocada-sobras;
+                            if (resPeso >= 2 && resRacao >= 1000) {
+                                listAnimais.add(nome);
+                            }
+                        }
                     }
                 }
                 arrayAdapterAnimais = new ArrayAdapter<String>(getApplication(), android.R.layout.simple_expandable_list_item_1, listAnimais);
@@ -111,11 +86,12 @@ public class List_Animais_Nutri extends AppCompatActivity {
 
     private void inicializarComponentes() {
         listViewAnimais = (ListView) findViewById(R.id.listViewAnimais);
-}
+    }
 
     private void alert(String msg) {
-        Toast.makeText(List_Animais_Nutri.this, msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(Desmame.this, msg, Toast.LENGTH_SHORT).show();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -124,12 +100,13 @@ public class List_Animais_Nutri extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
-                Intent i = new Intent(List_Animais_Nutri.this, Login.class);
+                Intent i = new Intent(Desmame.this, Login.class);
                 startActivity(i);
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

@@ -14,7 +14,7 @@ import com.example.appnutrigado.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MenuPrincipal extends AppCompatActivity {
-    private ImageButton btnFechar, btnCadastraAnimais, btngerenciaNutri;
+    private ImageButton btnFechar, btnCadastraAnimais, btnGerenciaNutri, btnGerenciaDesmame;
     private String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +39,10 @@ public class MenuPrincipal extends AppCompatActivity {
                 finish();
             }
         });
+
         btnCadastraAnimais.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                System.out.println(id);
                 Intent i = new Intent(MenuPrincipal.this, List_Animais_Cad.class);
                 Bundle parms = new Bundle();
                 parms.putString("id", id);
@@ -52,10 +51,21 @@ public class MenuPrincipal extends AppCompatActivity {
             }
         });
 
-        btngerenciaNutri.setOnClickListener(new View.OnClickListener() {
+        btnGerenciaNutri.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MenuPrincipal.this, List_Animais_Nutri.class);
+                Bundle parms = new Bundle();
+                parms.putString("id", id);
+                i.putExtras(parms);
+                startActivity(i);
+            }
+        });
+
+        btnGerenciaDesmame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MenuPrincipal.this, Desmame.class);
                 Bundle parms = new Bundle();
                 parms.putString("id", id);
                 i.putExtras(parms);
@@ -67,7 +77,8 @@ public class MenuPrincipal extends AppCompatActivity {
     private void inicializarComponentes() {
         btnFechar = (ImageButton) findViewById(R.id.btnfechar1);
         btnCadastraAnimais = (ImageButton) findViewById(R.id.btncadastraanimais);
-        btngerenciaNutri = (ImageButton) findViewById(R.id.btnGerenciaNutri);
+        btnGerenciaNutri = (ImageButton) findViewById(R.id.btnGerenciaNutri);
+        btnGerenciaDesmame = (ImageButton) findViewById(R.id.btnGerenciaDesmame);
 
     }
     @Override

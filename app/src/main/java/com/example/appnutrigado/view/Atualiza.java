@@ -110,8 +110,6 @@ public class Atualiza extends AppCompatActivity {
     }
 
     private void eventoClick() {
-
-
         atualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
