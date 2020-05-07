@@ -18,6 +18,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.appnutrigado.R;
+import com.github.rtoshiro.util.format.SimpleMaskFormatter;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,8 +30,8 @@ import java.util.Map;
 
 
 public class CadastroAnimais extends AppCompatActivity {
-    private String id, nomeRacas, sexo, montada;
-    private EditText editNumBrinco, editNomeAnimais, editDataNasc, editValorAnimal, editPesoAnimal;
+    private String incEstadual, nomeRacas, sexo, montada;
+    private EditText editNumBrinco, editNomeAnimais, editDataNasc, editPesoAnimal;
     private Button btnCadastra;
     private Spinner racas;
     private RadioButton masculino, feminino, natural, artificial;
@@ -41,6 +43,16 @@ public class CadastroAnimais extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro__animais);
+
+        Intent i = getIntent();
+        if (i != null) {
+            Bundle parms = i.getExtras();
+            if (parms != null) {
+                incEstadual = parms.getString("incEstadual");
+                System.out.println(incEstadual);
+            }
+        }
+
         inicializarComponentes();
         spinner();
         eventoClicks();
@@ -59,20 +71,19 @@ public class CadastroAnimais extends AppCompatActivity {
     }
 
     private void eventoClicks() {
-        Intent i = getIntent();
-        if (i != null) {
-            Bundle parms = i.getExtras();
-            if (parms != null) {
-                id = parms.getString("id");
-                System.out.println(id);
-            }
-        }
+        // macara para padronizar a data
+        SimpleMaskFormatter simpleMaskFormatter = new SimpleMaskFormatter("NN/NN/NNNN");
+        MaskTextWatcher maskTextWatcher = new MaskTextWatcher(editDataNasc, simpleMaskFormatter);
+        editDataNasc.addTextChangedListener(maskTextWatcher);
+        //fim da mascara
 
+        // e feita toda a exerção dos dados inseridos pelo usuario dos seus animais
         btnCadastra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (user != null) {
+                if (user != null ) {
+
                     Radio_Button();
                     String email = user.getEmail();
                     Map<String, Object> animais = new HashMap<>();
@@ -83,26 +94,35 @@ public class CadastroAnimais extends AppCompatActivity {
                     animais.put("montada", montada);
                     animais.put("Data de Nascimento", editDataNasc.getText().toString());
                     animais.put("Peso Ao Nascer", editPesoAnimal.getText().toString());
-                    animais.put("Sobras", "");
-                    animais.put("Ração Colocada", "");
-                    System.out.println(id);
-                    Log.i("ITALAC", "Incrição estadual: " + id);
+                    animais.put("Peso Atual", null);
+                    animais.put("Ração Colocada", null);
+                    animais.put("Sobras", null);
+                    System.out.println(incEstadual);
+                    Log.i("ITALAC", "Incrição estadual: " + incEstadual);
 
-                    db.collection("Usuario").document(email).collection("Fazendas")
-                            .document(id).collection("Animais").document(editNumBrinco.getText().toString())
-                            .set(animais)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    alert("Sucesso ao Cadastra");
-                                    Intent i = new Intent(CadastroAnimais.this, List_Animais_Cad.class);
-                                    Bundle parms = new Bundle();
-                                    parms.putString("id", id);
-                                    i.putExtras(parms);
-                                    startActivity(i);
-                                }
-                            });
-                }
+                    try {
+                        if (montada != null && sexo != null){
+                        db.collection("Usuario").document(email).collection("Fazendas")
+                                .document(incEstadual).collection("Animais").document(editNumBrinco.getText().toString())
+                                .set(animais)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        alert("Sucesso ao Cadastra");
+                                        Intent i = new Intent(CadastroAnimais.this, List_Animais_Cad.class);
+                                        Bundle parms = new Bundle();
+                                        parms.putString("incEstadual", incEstadual);
+                                        i.putExtras(parms);
+                                        startActivity(i);
+                                    }
+                                });}else
+                                    alert("Algum campo está vazio");
+                    }catch (IllegalArgumentException e){
+                        alert("Algum campo está vazio");
+                    }
+
+                }else
+                    alert("usuario não logado, faça o logout no canto superior direito");
             }
         });
     }

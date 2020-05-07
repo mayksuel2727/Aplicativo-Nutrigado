@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appnutrigado.R;
+import com.github.rtoshiro.util.format.SimpleMaskFormatter;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,12 +35,12 @@ import java.util.Map;
 
 public class Atualiza extends AppCompatActivity {
 
-    private String nomeRacas, sexo, montada, id, numeroBrinco, nomeDoAnimal, dataNacimento, pesoDoAnimal, racas;
+    private String nomeRacas, sexo, montada, incEstadual, numeroBrinco, nomeDoAnimal, dataNacimento, pesoAoNacer, racas, pesoAtual, racaoColocada, sobras;
     private EditText editNomeAnimais, editDataNasc, editPesoAnimal;
     private TextView texNumBrinco;
     private Spinner spinnerRacas;
     private RadioButton masculino, feminino, natural, artificial;
-    private Button atualizar, deletar;
+    private Button atualizar, btnDeletar;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -52,9 +53,8 @@ public class Atualiza extends AppCompatActivity {
         if (i != null) {
             Bundle parms = i.getExtras();
             if (parms != null) {
-                id = parms.getString("id");
+                incEstadual = parms.getString("incEstadual");
                 numeroBrinco = parms.getString("numerobrinco");
-                System.out.println(id);
             }
         }
 
@@ -64,10 +64,11 @@ public class Atualiza extends AppCompatActivity {
         eventoClick();
     }
 
-
+    // este metado e feio para busca todos os dados para setalo nos seus respectivos campos
+    // dados que são buscados pela consulta que compara todos os animais com o numero do brinco do animal selecionado
     private void buscarDados() {
         String email1 = user.getEmail();
-        db.collection("Usuario").document(email1).collection("Fazendas").document(id)
+        db.collection("Usuario").document(email1).collection("Fazendas").document(incEstadual)
                 .collection("Animais").whereEqualTo("Numero do Brinco", numeroBrinco)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -77,14 +78,17 @@ public class Atualiza extends AppCompatActivity {
                         nomeDoAnimal = (String) document.get("Nome do Animal");
                         numeroBrinco = (String) document.get("Numero do Brinco");
                         dataNacimento = (String) document.get("Data de Nascimento");
-                        pesoDoAnimal = (String) document.get("Peso do Animal");
+                        pesoAoNacer = (String) document.get("Peso Ao Nascer");
+                        pesoAtual = (String) document.get("Peso Atual");
                         sexo = (String) document.get("sexo");
                         montada = (String) document.get("montada");
                         racas = (String) document.get("Raça");
+                        racaoColocada = (String) document.get("Ração Colocada");
+                        sobras = (String) document.get("Sobras");
                         editNomeAnimais.setText(nomeDoAnimal);
                         texNumBrinco.setText(numeroBrinco);
                         editDataNasc.setText(dataNacimento);
-                        editPesoAnimal.setText(pesoDoAnimal);
+                        editPesoAnimal.setText(pesoAoNacer);
                         if (sexo.equals("Macho"))
                             masculino.setChecked(true);
                         else
@@ -110,6 +114,12 @@ public class Atualiza extends AppCompatActivity {
     }
 
     private void eventoClick() {
+        //e feita uma mascara para da um formato padrão a data de nacimento
+        SimpleMaskFormatter simpleMaskFormatter = new SimpleMaskFormatter("NN/NN/NNNN");
+        MaskTextWatcher maskTextWatcher = new MaskTextWatcher(editDataNasc, simpleMaskFormatter);
+        editDataNasc.addTextChangedListener(maskTextWatcher);
+        //fim da mascara
+        // ao clickar em atualizar e atualizados todos os novos valores
         atualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,44 +133,54 @@ public class Atualiza extends AppCompatActivity {
                     animais.put("sexo", sexo);
                     animais.put("montada", montada);
                     animais.put("Data de Nascimento", editDataNasc.getText().toString());
-                    animais.put("Peso do Animal", editPesoAnimal.getText().toString());
-                    System.out.println(id);
-                    Log.i("ITALAC", "Incrição estadual: " + id);
+                    animais.put("Peso Ao Nascer", editPesoAnimal.getText().toString());
+                    animais.put("Peso Atual", pesoAtual);
+                    animais.put("Ração Colocada", racaoColocada);
+                    animais.put("Sobras", sobras);
+                    System.out.println(incEstadual);
+                    try {
+                        if (sexo != null && montada != null) {
+                            db.collection("Usuario").document(email).collection("Fazendas")
+                                    .document(incEstadual).collection("Animais").document(numeroBrinco)
+                                    .set(animais)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            alert("Sucesso ao Cadastra");
+                                            Intent i = new Intent(Atualiza.this, List_Animais_Cad.class);
+                                            Bundle parms = new Bundle();
+                                            parms.putString("incEstadual", incEstadual);
+                                            i.putExtras(parms);
+                                            startActivity(i);
+                                        }
+                                    });
+                        }else
+                            alert("Agum Campo está vazio");
+                    } catch (IllegalArgumentException e) {
+                        alert("Agum Campo está vazio");
+                    }
 
-                    db.collection("Usuario").document(email).collection("Fazendas")
-                            .document(id).collection("Animais").document(numeroBrinco)
-                            .set(animais)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    alert("Sucesso ao Cadastra");
-                                    Intent i = new Intent(Atualiza.this, List_Animais_Cad.class);
-                                    Bundle parms = new Bundle();
-                                    parms.putString("id", id);
-                                    i.putExtras(parms);
-                                    startActivity(i);
-                                }
-                            });
                 }
             }
         });
 
-        deletar.setOnClickListener(new View.OnClickListener() {
+        //e este metado e feito para deletar um animal quando clickado no botão de delete
+        btnDeletar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = user.getEmail();
                 if (user != null) {
                     db.collection("Usuario").document(email).collection("Fazendas")
-                            .document(id).collection("List_Animais_Cad").document(numeroBrinco).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            .document(incEstadual).collection("Animais").document(numeroBrinco)
+                            .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             alert("deletado com sucesso");
                             Intent i = new Intent(Atualiza.this, List_Animais_Cad.class);
                             Bundle parms = new Bundle();
-                            parms.putString("id", id);
+                            parms.putString("incEstadual", incEstadual);
                             i.putExtras(parms);
                             startActivity(i);
-                            //
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -173,6 +193,7 @@ public class Atualiza extends AppCompatActivity {
         });
     }
 
+    //pega o intem selecionado no spinner e passar para uma string
     private void spinner() {
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.racas, android.R.layout.simple_spinner_item);
         spinnerRacas.setAdapter(adapter);
@@ -201,7 +222,7 @@ public class Atualiza extends AppCompatActivity {
         natural = (RadioButton) findViewById(R.id.natural);
         artificial = (RadioButton) findViewById(R.id.artificial);
         atualizar = (Button) findViewById(R.id.btnAtualizar);
-        deletar = (Button) findViewById(R.id.btnDeletar);
+        btnDeletar = (Button) findViewById(R.id.btnDeletar);
     }
 
     private void alert(String msg) {

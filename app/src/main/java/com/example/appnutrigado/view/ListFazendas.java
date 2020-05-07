@@ -40,17 +40,17 @@ public class ListFazendas extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_fazendas);
-        inicializarComponentes();
 
-        if (user != null) {
-            eventoBusca();
-            eventoClick();
-        }
+        inicializarComponentes();
+        eventoBusca();
+        eventoClick();
     }
 
 
     private void eventoClick() {
+        //novamente e pego o email do user logado no momento
         final String email1 = user.getEmail();
+        //ao clickar no botão de cadastrar o usuario e direcionado para a tela de cadastro de novas fazendas
         btnCad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,26 +58,28 @@ public class ListFazendas extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        //a listView ira mostrar todas a fazendas cadastradas
         listViewFazendas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                // a variavel fazendaSelecionada ira pega o nome da fazenda que foi selecionda
                 fazendaSelecionada = (String) adapterView.getItemAtPosition(position);
-
+                //foi feita uma consulta que ira pegar o numero da inscrição estadual da fazenda selecionada
                 db.collection("Usuario").document(email1).collection("Fazendas").whereEqualTo("Nome da Fazenda", fazendaSelecionada)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                String no = null;
+                                String incEstadual = null;
                                 if (task.isSuccessful()) {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
-                                        no = (String) document.get("Inscrição Estadual");
+                                        incEstadual = (String) document.get("Inscrição Estadual");
                                     }
                                 }
-                                System.out.println(no);
+                                //Foi criado um intent para pode passa a inscrição estadual da fazenda selecionada pra a proxima tela
                                 Intent i = new Intent(ListFazendas.this, MenuPrincipal.class);
                                 Bundle parms = new Bundle();
-                                parms.putString("id", no);
+                                parms.putString("incEstadual", incEstadual);
                                 i.putExtras(parms);
                                 startActivity(i);
                             }
@@ -87,7 +89,10 @@ public class ListFazendas extends AppCompatActivity {
         });
     }
 
+    //neste metado e realiza uma busca por toda a coleção de fazenda do usuario logado no momento
+    // e a cada fazenda encotrada e pego o seu nome e add na list.
     private void eventoBusca() {
+        //na linha 92 e pego o email do user registrano no momento para pode fazer a busca
         String email1 = user.getEmail();
         db.collection("Usuario").document(email1).collection("Fazendas").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -97,6 +102,8 @@ public class ListFazendas extends AppCompatActivity {
                         String nome = (String) documentSnapshot.get("Nome da Fazenda");
                         listFazenda.add(nome);
                     }
+                }else {
+                    alert("Faça o logout e realize novamento o login");
                 }
                 arrayAdapterFazenda = new ArrayAdapter<String>(getApplication(), android.R.layout.simple_expandable_list_item_1, listFazenda);
                 listViewFazendas.setAdapter(arrayAdapterFazenda);
@@ -113,6 +120,7 @@ public class ListFazendas extends AppCompatActivity {
         Toast.makeText(ListFazendas.this, msg, Toast.LENGTH_SHORT).show();
     }
 
+    // os metados abaixo são para pode se efetuar o logout
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -121,7 +129,7 @@ public class ListFazendas extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
                 Intent i = new Intent(ListFazendas.this, Login.class);

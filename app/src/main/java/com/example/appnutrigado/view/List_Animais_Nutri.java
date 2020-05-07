@@ -34,7 +34,7 @@ public class List_Animais_Nutri extends AppCompatActivity {
     private List<String> listAnimais = new ArrayList<String>();
     private ArrayAdapter<String> arrayAdapterAnimais;
     private String animalSelecionado;
-    private String id;
+    private String incEstadual;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +45,7 @@ public class List_Animais_Nutri extends AppCompatActivity {
         if (i!= null){
             Bundle parms = i.getExtras();
             if (parms != null){
-                id  = parms.getString("id");
+                incEstadual  = parms.getString("incEstadual");
             }
         }
         eventoBusca();
@@ -61,7 +61,7 @@ public class List_Animais_Nutri extends AppCompatActivity {
                 animalSelecionado = (String) adapterView.getItemAtPosition(position);
 
                 db.collection("Usuario").document(email1).collection("Fazendas")
-                        .document(id).collection("Animais").whereEqualTo("Nome do Animal", animalSelecionado)
+                        .document(incEstadual).collection("Animais").whereEqualTo("Nome do Animal", animalSelecionado)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
@@ -71,16 +71,13 @@ public class List_Animais_Nutri extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         numeroBrinco = (String) document.get("Numero do Brinco");
-                                        nomeAnimal = (String) document.get("Nome do Animal");
                                         System.out.println(numeroBrinco);
                                     }
                                 }
-                                System.out.println(numeroBrinco);
                                 Intent i = new Intent(List_Animais_Nutri.this, Nutricao.class);
                                 Bundle parms = new Bundle();
                                 parms.putString("numerobrinco", numeroBrinco);
-                                parms.putString("nomedoanimal", nomeAnimal);
-                                parms.putString("id", id);
+                                parms.putString("incEstadual", incEstadual);
                                 i.putExtras(parms);
                                 startActivity(i);
                             }
@@ -92,9 +89,9 @@ public class List_Animais_Nutri extends AppCompatActivity {
 
     private void eventoBusca() {
         String email1 = user.getEmail();
-        System.out.println(id);
+        System.out.println(incEstadual);
         db.collection("Usuario").document(email1).collection("Fazendas")
-                .document(id).collection("Animais").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .document(incEstadual).collection("Animais").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -113,9 +110,6 @@ public class List_Animais_Nutri extends AppCompatActivity {
         listViewAnimais = (ListView) findViewById(R.id.listViewAnimais);
 }
 
-    private void alert(String msg) {
-        Toast.makeText(List_Animais_Nutri.this, msg, Toast.LENGTH_SHORT).show();
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);

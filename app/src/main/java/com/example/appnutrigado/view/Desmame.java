@@ -31,7 +31,7 @@ public class Desmame extends AppCompatActivity {
     private List<String> listAnimais = new ArrayList<String>();
     private ArrayAdapter<String> arrayAdapterAnimais;
     //private String animalSelecionado;
-    private String id;
+    private String incEstadual;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +41,8 @@ public class Desmame extends AppCompatActivity {
         if (i != null) {
             Bundle parms = i.getExtras();
             if (parms != null) {
-                id = parms.getString("id");
-                System.out.println(id);
+                incEstadual = parms.getString("incEstadual");
+                System.out.println(incEstadual);
             }
         }
         eventoBusca();
@@ -51,25 +51,29 @@ public class Desmame extends AppCompatActivity {
 
     private void eventoBusca() {
         String email1 = user.getEmail();
-        System.out.println(id);
+        System.out.println(incEstadual);
         db.collection("Usuario").document(email1).collection("Fazendas")
-                .document(id).collection("Animais").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .document(incEstadual).collection("Animais").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
+                    // aki e percorrido todos animais e é pego nome, peso de atual e de quando nasceu, e o ração consumida e sobras do dia anterior
+                    // assim e feito o calculo de o bezerro ter o dobro de peso e comer mas de 1000 g de ração por dia
+                    // ao obedecer esses dois criterios o nome dele e colocado numa list para poder aparecer na list view como pronto para o desmame
                     for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                         String nome = (String) documentSnapshot.get("Nome do Animal");
                         String pesoNacerString = (String) documentSnapshot.get("Peso Ao Nascer");
                         String pesoAtualString = (String) documentSnapshot.get("Peso Atual");
                         String racaoColocadaString = (String) documentSnapshot.get("Ração Colocada");
                         String sobraString = (String) documentSnapshot.get("Sobras");
-                        if (pesoAtualString!= null && pesoNacerString!=null && racaoColocadaString != null && sobraString != null){
+                        //para não passar valores null pro parseDouble
+                        if (pesoAtualString!= null && pesoNacerString!=null && racaoColocadaString != null && sobraString != null) {
                             double pesoAtual = Double.parseDouble(pesoAtualString);
                             double pesoNacer = Double.parseDouble(pesoNacerString);
                             double resPeso = pesoAtual / pesoNacer;
                             double racaoColocada = Double.parseDouble(racaoColocadaString);
                             double sobras = Double.parseDouble(sobraString);
-                            double resRacao = racaoColocada-sobras;
+                            double resRacao = racaoColocada - sobras;
                             if (resPeso >= 2 && resRacao >= 1000) {
                                 listAnimais.add(nome);
                             }

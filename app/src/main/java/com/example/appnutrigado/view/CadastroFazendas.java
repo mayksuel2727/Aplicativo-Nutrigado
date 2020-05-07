@@ -61,24 +61,28 @@ public class CadastroFazendas extends AppCompatActivity {
                     fazenda.put("Cnpj ou Cpf", editCNPJouCPF.getText().toString());
                     fazenda.put("Endereço", editEndereço.getText().toString());
 
+                    try {
+                        db.collection("Usuario").document(email).collection("Fazendas").document(editIncEstadual.getText().toString())
+                                .set(fazenda)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        alert("Sucesso ao Cadastrar");
+                                        Intent i = new Intent(CadastroFazendas.this, ListFazendas.class);
+                                        startActivity(i);
 
-                    db.collection("Usuario").document(email).collection("Fazendas").document(editIncEstadual.getText().toString())
-                            .set(fazenda)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    alert("Sucesso ao Cadastrar");
-                                    Intent i = new Intent(CadastroFazendas.this, ListFazendas.class);
-                                    startActivity(i);
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        alert("Erro ao cadastrar");
+                                    }
+                                });
+                    }catch (IllegalArgumentException e){
+                        alert("Algum campo está vazio");
+                    }
 
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    alert("Erro ao cadastrar");
-                                }
-                            });
 
                 }
             }

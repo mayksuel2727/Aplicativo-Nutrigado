@@ -18,23 +18,23 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Login extends AppCompatActivity {
+
     private EditText editE_mail, editSenha;
     private Button btnEntrar, btnCadastro;
 
-    private FirebaseAuth auth;
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        auth = FirebaseAuth.getInstance();
         inicializarComponentes();
         eventoClicks();
     }
 
-
     private void eventoClicks() {
+        // Ao clickar no botão cadastro ele ira para tela onde irá poder se cadastrar
         btnCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,6 +43,8 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        //Ao clickar no botão de entrar ele ira passar po um try catch onde se os campos não estiverem vazios
+        //ele ira chamar o metado login que fara a auteticaçãop
         btnEntrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,7 +52,7 @@ public class Login extends AppCompatActivity {
                 String senha = editSenha.getText().toString().trim();
                 try {
                     login(email, senha);
-                }catch (IllegalArgumentException e){
+                } catch (IllegalArgumentException e) {
                     alerte("Campos e-mail ou senha estão vazios");
                 }
 
@@ -58,21 +60,25 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    // neste metado se usa a ferramenta do firebase para fazer a autenticação
+    // onde caso a mesma esteja correta será redirecionada para a tela de fazendas.
     private void login(String email, String senha) {
-        auth.signInWithEmailAndPassword(email,senha).addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
+        auth.signInWithEmailAndPassword(email, senha).addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     Intent i = new Intent(Login.this, ListFazendas.class);
                     startActivity(i);
-                }else{
+                } else {
                     alerte("email ou senha errrados");
                 }
             }
         });
     }
 
-    private void alerte(String s) { Toast.makeText(Login.this,s,Toast.LENGTH_SHORT).show();}
+    private void alerte(String s) {
+        Toast.makeText(Login.this, s, Toast.LENGTH_SHORT).show();
+    }
 
     private void inicializarComponentes() {
         editE_mail = (EditText) findViewById(R.id.edit_Email);
@@ -80,6 +86,7 @@ public class Login extends AppCompatActivity {
         btnEntrar = (Button) findViewById(R.id.btnEntra);
         btnCadastro = (Button) findViewById(R.id.btnCadastro);
     }
+
     @Override
     protected void onStart() {
         super.onStart();

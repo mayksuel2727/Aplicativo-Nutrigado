@@ -29,7 +29,7 @@
     <string name="valor">Valor do Animal</string>
     <string name="macho">Macho</string>
     <string name="femia">Fêmea</string>
-    <string name="peso">Peso ao nascer</string>
+    <string name="peso">Peso ao Nascer - Kg</string>
     <string name="cobertura">Tipo de cobertura</string>
     <string name="natural">Monta natural</string>
     <string name="artificial">Inseminação artificial</string>
@@ -43,8 +43,8 @@
     <string name="Logout">Logout</string>
     <string name="NutricaoAnimal">Nutrição Animal</string>
     <string name="pesoAtual">Peso Atual</string>
-    <string name="sobras">Sobras de Ração</string>
-    <string name="quantidadeAtual">Quantidade de Ração Colocada</string>
+    <string name="sobras">Sobras de Ração em Gramas</string>
+    <string name="quantidadeAtual">Peso de Ração Colocada em Gramas</string>
     <string name="animaisDesmame">Animais Pronto Para o Desmame</string>
     <string-array name="racas">
         <item>Holandesa</item>

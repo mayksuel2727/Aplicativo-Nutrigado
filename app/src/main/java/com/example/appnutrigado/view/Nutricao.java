@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Nutricao extends AppCompatActivity {
-    private String id, numeroBrinco,nomeAnimal, pesoAoNascer, nomeRacas, sexo, montada, dataNasc;
+    private String incEstadual, numeroBrinco, nomeAnimal, pesoAoNascer, nomeRacas, sexo, montada, dataNasc, pesoAtual, ifPesoAtual, ifSobra, ifColocada;
     private TextView txtNomeAnimal, txtNumBrinco;
     private EditText edtPesoAtual, edtQuantidadeSobras, edtRacaoColocada;
     private Button btnCadastra;
@@ -44,10 +44,8 @@ public class Nutricao extends AppCompatActivity {
         if (i != null) {
             Bundle parms = i.getExtras();
             if (parms != null) {
-                id = parms.getString("id");
+                incEstadual = parms.getString("incEstadual");
                 numeroBrinco = parms.getString("numerobrinco");
-                nomeAnimal = parms.getString("nomedoanimal");
-                System.out.println(id);
             }
         }
 
@@ -55,13 +53,14 @@ public class Nutricao extends AppCompatActivity {
         buscarDados();
         eventoClick();
     }
+
     private void eventoClick() {
         btnCadastra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (user != null){
+                if (user != null) {
                     String email = user.getEmail();
-
+                    //mesmo adicionando so mas 3 campos e nescessario setar todos se não eles serão excluidos
                     Map<String, Object> animais = new HashMap<>();
                     animais.put("Numero do Brinco", numeroBrinco);
                     animais.put("Nome do Animal", nomeAnimal);
@@ -70,24 +69,30 @@ public class Nutricao extends AppCompatActivity {
                     animais.put("montada", montada);
                     animais.put("Data de Nascimento", dataNasc);
                     animais.put("Peso Ao Nascer", pesoAoNascer);
-                    animais.put("Peso Atual", edtPesoAtual.getText().toString());
-                    animais.put("Sobras", edtQuantidadeSobras.getText().toString());
-                    animais.put("Ração Colocada", edtRacaoColocada.getText().toString());
-                    db.collection("Usuario").document(email).collection("Fazendas")
-                            .document(id).collection("Animais").document(numeroBrinco)
-                            .set(animais)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    alert("Sucesso ao Cadastra");
-                                    Intent i = new Intent(Nutricao.this, List_Animais_Nutri.class);
-                                    Bundle parms = new Bundle();
-                                    parms.putString("id", id);
-                                    i.putExtras(parms);
-                                    startActivity(i);
-                                }
-                            });
+                    ifPesoAtual = edtPesoAtual.getText().toString();
+                    ifSobra = edtQuantidadeSobras.getText().toString();
+                    ifColocada = edtRacaoColocada.getText().toString();
+                    animais.put("Peso Atual", ifPesoAtual);
+                    animais.put("Sobras", ifSobra );
+                    animais.put("Ração Colocada", ifColocada );
+                    if (ifPesoAtual.equals("")|| ifSobra.equals("") || ifColocada.equals("")) {
+                        alert("Algum campo está vazio");
+                    } else
 
+                        db.collection("Usuario").document(email).collection("Fazendas")
+                                .document(incEstadual).collection("Animais").document(numeroBrinco)
+                                .set(animais)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        alert("Sucesso ao Cadastra");
+                                        Intent i = new Intent(Nutricao.this, List_Animais_Nutri.class);
+                                        Bundle parms = new Bundle();
+                                        parms.putString("incEstadual", incEstadual);
+                                        i.putExtras(parms);
+                                        startActivity(i);
+                                    }
+                                });
                 }
             }
         });
@@ -95,19 +100,22 @@ public class Nutricao extends AppCompatActivity {
 
     private void buscarDados() {
         String email = user.getEmail();
-        db.collection("Usuario").document(email).collection("Fazendas").document(id)
+        db.collection("Usuario").document(email).collection("Fazendas").document(incEstadual)
                 .collection("Animais").whereEqualTo("Numero do Brinco", numeroBrinco)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()){
-                    for (QueryDocumentSnapshot document : task.getResult()){
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
                         pesoAoNascer = (String) document.get("Peso Ao Nascer");
+                        nomeAnimal = (String) document.get("Nome do Animal");
                         nomeRacas = (String) document.get("Raça");
                         sexo = (String) document.get("sexo");
                         montada = (String) document.get("montada");
                         dataNasc = (String) document.get("Data de Nascimento");
+                        pesoAtual = (String) document.get("Peso Atual");
                         txtNomeAnimal.setText(nomeAnimal);
+                        edtPesoAtual.setText(pesoAtual);
                         txtNumBrinco.setText(numeroBrinco);
                     }
                 }

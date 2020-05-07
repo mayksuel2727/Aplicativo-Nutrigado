@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.appnutrigado.R;
+import com.github.rtoshiro.util.format.SimpleMaskFormatter;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,22 +27,27 @@ import java.util.Map;
 public class CadastroUsuario extends AppCompatActivity {
     private EditText editNome, editTelefone, editEmail, editSenha;
     private Button btnCadastrar;
-    private FirebaseAuth auth;
+    private FirebaseAuth auth = FirebaseAuth.getInstance();;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro__usuario);
-        //etSupportActionBar().hide();
-        auth = FirebaseAuth.getInstance();
 
         inicializarComponentes();
         eventosClicks();
     }
 
-
+    //Ao clickar no botão de cadastrar ele ira passar po um try catch onde se os campos não estiverem vazios
+    //ele ira chamar o metado insertBD que fara o seu registro como usuario caso não exista nenhum email igual o dele ja cadastrado
+    //depois de registra o usuario sera feita a insessão do dados no BD
     private void eventosClicks() {
+        //Aqui foi criada uma mascara para o campo de cadastro de telefone
+        SimpleMaskFormatter simpleMaskFormatter = new SimpleMaskFormatter("(NN) NNNNN-NNNN");
+        MaskTextWatcher maskTextWatcher = new MaskTextWatcher(editTelefone, simpleMaskFormatter);
+        editTelefone.addTextChangedListener(maskTextWatcher);
+        //Fim da mascara
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,10 +63,12 @@ public class CadastroUsuario extends AppCompatActivity {
     }
 
     private void InsertBD(String email, String senha) {
+        //na linha de baixo e feito o registro de usuario
         auth.createUserWithEmailAndPassword(email,senha).addOnCompleteListener(CadastroUsuario.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
+                    //apos o registro ser efetuado com sucesso sera feita a insersão no BD
                     Map<String, Object> user = new HashMap<>();
                     user.put("Nome", editNome.getText().toString());
                     user.put("Telefone", editTelefone.getText().toString());
@@ -81,7 +90,7 @@ public class CadastroUsuario extends AppCompatActivity {
                     Intent i = new Intent(CadastroUsuario.this, ListFazendas.class);
                     startActivity(i);
                 }else{
-                        alert("que porra aconteceu");
+                        alert("Email invalido ou ja cadastrado");
                 }
             }
         });

@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.appnutrigado.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,18 +33,19 @@ public class List_Animais_Cad extends AppCompatActivity {
     private List<String> listAnimais = new ArrayList<String>();
     private ArrayAdapter<String> arrayAdapterAnimais;
     private String animalSelecionado;
-    private Button btnCad;
-    private String id;
+    private Button btnCadastrar;
+    private String incEstadual;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_animais_cad);
         inicializarComponentes();
         Intent i = getIntent();
+        //faço a inicialização do itente e pego a inscrição estadual que foi passado na tela anterior
         if (i!= null){
             Bundle parms = i.getExtras();
             if (parms != null){
-                id  = parms.getString("id");
+                incEstadual  = parms.getString("incEstadual");
             }
         }
             eventoBusca();
@@ -54,13 +54,14 @@ public class List_Animais_Cad extends AppCompatActivity {
 
     private void eventoClick() {
         final String email1 = user.getEmail();
-        btnCad.setOnClickListener(new View.OnClickListener() {
+
+        btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(id);
+                System.out.println(incEstadual);
                 Intent i = new Intent(List_Animais_Cad.this, CadastroAnimais.class);
                 Bundle parms = new Bundle();
-                parms.putString("id", id);
+                parms.putString("incEstadual", incEstadual);
                 i.putExtras(parms);
                 startActivity(i);
             }
@@ -70,8 +71,10 @@ public class List_Animais_Cad extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 animalSelecionado = (String) adapterView.getItemAtPosition(position);
 
+                // quando o usuario clickar em uma animal sera feita uma consulta que ira pegar o numero o numero do brinco do animal selecionaddo
+                // e passa pra proxima tela junto com a inscrição estadual
                 db.collection("Usuario").document(email1).collection("Fazendas")
-                        .document(id).collection("Animais").whereEqualTo("Nome do Animal", animalSelecionado)
+                        .document(incEstadual).collection("Animais").whereEqualTo("Nome do Animal", animalSelecionado)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
@@ -83,11 +86,10 @@ public class List_Animais_Cad extends AppCompatActivity {
                                         System.out.println(numeroBrinco);
                                     }
                                 }
-                                System.out.println(numeroBrinco);
                                 Intent i = new Intent(List_Animais_Cad.this, Atualiza.class);
                                 Bundle parms = new Bundle();
                                 parms.putString("numerobrinco", numeroBrinco);
-                                parms.putString("id", id);
+                                parms.putString("incEstadual", incEstadual);
                                 i.putExtras(parms);
                                 startActivity(i);
                             }
@@ -97,11 +99,13 @@ public class List_Animais_Cad extends AppCompatActivity {
         });
     }
 
+    //neste metado e realiza uma busca por toda a coleção de animais do usuario logado no momento
+    // e a cada animal encotrado e pego o seu nome e add na list.
     private void eventoBusca() {
         String email1 = user.getEmail();
-        System.out.println(id);
+        System.out.println(incEstadual);
         db.collection("Usuario").document(email1).collection("Fazendas")
-                .document(id).collection("Animais").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .document(incEstadual).collection("Animais").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -118,12 +122,9 @@ public class List_Animais_Cad extends AppCompatActivity {
 
     private void inicializarComponentes() {
         listViewAnimais = (ListView) findViewById(R.id.listViewAnimais);
-        btnCad = (Button) findViewById(R.id.btnCadastra);
+        btnCadastrar = (Button) findViewById(R.id.btnCadastra);
     }
 
-    private void alert(String msg) {
-        Toast.makeText(List_Animais_Cad.this, msg, Toast.LENGTH_SHORT).show();
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);

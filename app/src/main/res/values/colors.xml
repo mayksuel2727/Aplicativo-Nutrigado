@@ -3,8 +3,8 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="branco">#FFF</color>
-    <color name="cinza">#F0EEEE</color>
+    <color name="branco">#FFFFFF</color>
+    <color name="cinza">#FFFFFF</color>
     <color name="verde_escuro">#15B60A</color>
     <color name="azul_claro">#1E72D3</color>
     <color name="preto">#000000</color>
